@@ -18,5 +18,10 @@ public class MainActivity extends AppCompatActivity {
 
         //tao table
         String createTable = "CREATE TABLE IF NOT EXISTS Sinhvien(Id INTEGER PRIMARY KEY AUTOINCREMENT , Ten VARCHAR , Diachi VARCHAR , Namsinh INTEGER)";
+        sqLite.onQuery(createTable);
+
+        //them du lieu
+        String insert = "INSERT INTO Sinhvien VALUES(null,'Nguyễn Văn A','Quận 1',1990)";
+        sqLite.onQuery(insert);
     }
 }
