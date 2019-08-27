@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.sqlite02072019.db.Database;
 import com.example.sqlite02072019.db.SQLite;
 
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //tao database
-        sqLite = new SQLite(this,"Quanlysinhvien.sql",null,1);
 
         recyclerView = findViewById(R.id.recyclerviewSinhvien);
         edtDiachi = findViewById(R.id.edittextDiachi);
@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
     }
     private void payLoad(){
         String data = "SELECT * FROM Sinhvien";
