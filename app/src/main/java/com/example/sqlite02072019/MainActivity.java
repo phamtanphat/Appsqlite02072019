@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.sqlite02072019.db.SQLite;
 
@@ -67,8 +69,14 @@ public class MainActivity extends AppCompatActivity {
                 String namsinh =  edtNamsinh.getText().toString();
 
                 if (ten.length() <= 0 || diachi.length() <= 0 || namsinh.length()<=0) return;
-                String insert = String.format("INSERT INTO Sinhvien VALUES (null , '%s' , '%s' ,%d)" , ten,diachi,namsinh);
-                String insert = "INSERT INTO Sinhvien VALUES (null , ? , ? ,?)";
+                try {
+                    String insert = String.format("INSERT INTO Sinhvien VALUES (null , '%s' , '%s' ,%s)" , ten , diachi , namsinh);
+//                String insert = "INSERT INTO Sinhvien VALUES (null , ? , ? ,?)";
+                    sqLite.onQuery(insert);
+                }catch (Exception e){
+                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
