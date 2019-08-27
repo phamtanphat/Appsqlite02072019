@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 //                String insert = "INSERT INTO Sinhvien VALUES (null , ? , ? ,?)";
                     sqLite.onQuery(insert);
                     payLoad();
+                    btnReset.performClick();
                 }catch (Exception e){
                     Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
