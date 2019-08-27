@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sqlite02072019.db.Database;
+
 import java.util.ArrayList;
 
 public class SinhvienAdapter extends RecyclerView.Adapter<SinhvienAdapter.Holder> {
@@ -54,6 +56,7 @@ public class SinhvienAdapter extends RecyclerView.Adapter<SinhvienAdapter.Holder
                 @Override
                 public void onClick(View view) {
                     String delete = String.format("DELETE FROM Sinhvien WHERE Id = %s",sinhviens.get(getLayoutPosition()).getId());
+                    Database.getInstance(null).onQuery(delete);
                 }
             });
         }
