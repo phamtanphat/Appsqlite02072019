@@ -74,8 +74,10 @@ public class MainActivity extends AppCompatActivity {
     }
     private void payLoad(){
         String data = "SELECT * FROM Sinhvien";
-
         Cursor cursor = sqLite.getData(data);
+        if (msinhviens != null){
+            msinhviens.clear();
+        }
         while (cursor.moveToNext()){
             int id = cursor.getInt(0);
             String ten = cursor.getString(1);
