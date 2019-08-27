@@ -1,10 +1,12 @@
 package com.example.sqlite02072019;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,8 +57,15 @@ public class SinhvienAdapter extends RecyclerView.Adapter<SinhvienAdapter.Holder
             btnXoa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String delete = String.format("DELETE FROM Sinhvien WHERE Id = %s",sinhviens.get(getLayoutPosition()).getId());
-                    Database.getInstance(null).onQuery(delete);
+                    try {
+                        String delete = String.format("DELETE FROM Sinhvien WHERE Id = %s",sinhviens.get(getLayoutPosition()).getId());
+                        Database.getInstance(null).onQuery(delete);
+                        sinhviens.remove(getLayoutPosition());
+                        notifyDataSetChanged();
+                    }catch (Exception e){
+                        Log.d("BBB",e.getMessage());
+                    }
+
                 }
             });
         }
