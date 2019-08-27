@@ -42,17 +42,7 @@ public class MainActivity extends AppCompatActivity {
         msinhvienAdapter = new SinhvienAdapter(msinhviens);
         recyclerView.setAdapter(msinhvienAdapter);
 
-        String data = "SELECT * FROM Sinhvien";
-
-        Cursor cursor = sqLite.getData(data);
-        while (cursor.moveToNext()){
-            int id = cursor.getInt(0);
-            String ten = cursor.getString(1);
-            String diachi = cursor.getString(2);
-            int namsinh = cursor.getInt(3);
-            msinhviens.add(new Sinhvien(id,ten,diachi,namsinh));
-            msinhvienAdapter.notifyDataSetChanged();
-        }
+        payLoad();
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     String insert = String.format("INSERT INTO Sinhvien VALUES (null , '%s' , '%s' ,%s)" , ten , diachi , namsinh);
 //                String insert = "INSERT INTO Sinhvien VALUES (null , ? , ? ,?)";
                     sqLite.onQuery(insert);
+                    payLoad();
                 }catch (Exception e){
                     Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -81,6 +72,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void payLoad(){
+        String data = "SELECT * FROM Sinhvien";
 
+        Cursor cursor = sqLite.getData(data);
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(0);
+            String ten = cursor.getString(1);
+            String diachi = cursor.getString(2);
+            int namsinh = cursor.getInt(3);
+            msinhviens.add(new Sinhvien(id,ten,diachi,namsinh));
+            msinhvienAdapter.notifyDataSetChanged();
+        }
+    }
 
 }
