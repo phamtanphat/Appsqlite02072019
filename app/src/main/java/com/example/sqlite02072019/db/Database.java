@@ -11,7 +11,7 @@ public class Database {
 
     }
 
-    public SQLite getInstance(@Nullable Context context){
+    public static SQLite getInstance(@Nullable Context context){
         if (instance == null){
             instance = new SQLite(context,
                     "Quanlysinhvien.sql",

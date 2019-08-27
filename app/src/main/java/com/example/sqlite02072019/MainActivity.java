@@ -20,17 +20,18 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    SQLite sqLite;
     RecyclerView recyclerView;
     SinhvienAdapter msinhvienAdapter;
     ArrayList<Sinhvien> msinhviens;
     Button btnReset,btnAdd;
     EditText edtTen,edtDiachi,edtNamsinh;
+    SQLite sqLite;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //tao database
+        sqLite = Database.getInstance(this);
 
         recyclerView = findViewById(R.id.recyclerviewSinhvien);
         edtDiachi = findViewById(R.id.edittextDiachi);

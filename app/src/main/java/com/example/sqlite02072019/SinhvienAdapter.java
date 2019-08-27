@@ -50,6 +50,12 @@ public class SinhvienAdapter extends RecyclerView.Adapter<SinhvienAdapter.Holder
             txtTen = itemView.findViewById(R.id.textviewTen);
             txtNamsinh = itemView.findViewById(R.id.textviewNamsinh);
             btnXoa = itemView.findViewById(R.id.buttonXoa);
+            btnXoa.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String delete = String.format("DELETE FROM Sinhvien WHERE Id = %s",sinhviens.get(getLayoutPosition()).getId());
+                }
+            });
         }
     }
 }
