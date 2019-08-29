@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.sqlite02072019.db.Database;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnReset,btnAdd;
     EditText edtTen,edtDiachi,edtNamsinh;
     SQLite sqLite;
+    SearchView mSearchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,23 @@ public class MainActivity extends AppCompatActivity {
         msinhviens = new ArrayList<>();
         msinhvienAdapter = new SinhvienAdapter(msinhviens);
         recyclerView.setAdapter(msinhvienAdapter);
+        mSearchView = findViewById(R.id.searchview);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                // Tim kiem gia tri trong mang cua adapter
+                // adapter se hien thi ket qua kiem duoc
+                // nguyen van a => Nguyen Van A
+
+
+                return false;
+            }
+        });
 
         payLoad();
         btnReset.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
     private void payLoad(){

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sqlite02072019.db.Database;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SinhvienAdapter extends RecyclerView.Adapter<SinhvienAdapter.Holder> {
 
@@ -30,7 +31,23 @@ public class SinhvienAdapter extends RecyclerView.Adapter<SinhvienAdapter.Holder
         View view = layoutInflater.inflate(R.layout.item_sinhvien,null);
         return new Holder(view);
     }
+    public void filter(String text , ArrayList<Sinhvien> sinhvienArrayList){
+        ArrayList<Sinhvien> arrayResult = new ArrayList<>();
+        if (sinhvienArrayList != null){
+            for(Sinhvien sinhvien : sinhvienArrayList){
+                if (sinhvien.getTen().toLowerCase().replace(" ","").contains(text.toLowerCase().replace(" ",""))){
+                    arrayResult.add(sinhvien);
+                }
+            }
+            if (sinhviens != null){
+                sinhviens.clear();
+                sinhviens.addAll(arrayResult);
+                notifyDataSetChanged();
+            }
 
+        }
+
+    }
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Sinhvien sinhvien = sinhviens.get(position);
