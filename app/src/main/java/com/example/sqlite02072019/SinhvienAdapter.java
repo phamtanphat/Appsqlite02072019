@@ -32,7 +32,6 @@ public class SinhvienAdapter extends RecyclerView.Adapter<SinhvienAdapter.Holder
     }
     public void addAll(List<Sinhvien> sinhviens){
         if (sinhviens != null ){
-
             this.sinhviens.clear();
             this.sinhviens.addAll(sinhviens);
             notifyDataSetChanged();
@@ -47,7 +46,6 @@ public class SinhvienAdapter extends RecyclerView.Adapter<SinhvienAdapter.Holder
                 }
             }
             this.addAll(arrayResult);
-
         }
 
     }
