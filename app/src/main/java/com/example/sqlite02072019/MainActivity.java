@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     SinhvienAdapter msinhvienAdapter;
-    ArrayList<Sinhvien> msinhviens;
-    Button btnReset,btnAdd;
-    EditText edtTen,edtDiachi,edtNamsinh;
+    ArrayList<Sinhvien> msinhviens = new ArrayList<>();
+    Button btnReset, btnAdd;
+    EditText edtTen, edtDiachi, edtNamsinh;
     SQLite sqLite;
     SearchView mSearchView;
 
@@ -39,13 +39,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerviewSinhvien);
         edtDiachi = findViewById(R.id.edittextDiachi);
         edtTen = findViewById(R.id.edittextTen);
-        edtNamsinh= findViewById(R.id.edittextNamsinh);
-        btnAdd =findViewById(R.id.buttonThem);
+        edtNamsinh = findViewById(R.id.edittextNamsinh);
+        btnAdd = findViewById(R.id.buttonThem);
         btnReset = findViewById(R.id.buttonXoa);
-        msinhviens = new ArrayList<>();
+
         msinhvienAdapter = new SinhvienAdapter(msinhviens);
         recyclerView.setAdapter(msinhvienAdapter);
         mSearchView = findViewById(R.id.searchview);
+        payLoad();
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -57,13 +58,16 @@ public class MainActivity extends AppCompatActivity {
                 // Tim kiem gia tri trong mang cua adapter
                 // adapter se hien thi ket qua kiem duoc
                 // nguyen van a => Nguyen Van A
-
-
-                return false;
+                if (s.equals("")) {
+                    msinhvienAdapter.addAll(msinhviens);
+                } else {
+                    msinhvienAdapter.filter(s, msinhviens);
+                }
+                return true;
             }
         });
 
-        payLoad();
+
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,38 +81,37 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String ten = edtTen.getText().toString();
                 String diachi = edtDiachi.getText().toString();
-                String namsinh =  edtNamsinh.getText().toString();
+                String namsinh = edtNamsinh.getText().toString();
 
-                if (ten.length() <= 0 || diachi.length() <= 0 || namsinh.length()<=0) return;
+                if (ten.length() <= 0 || diachi.length() <= 0 || namsinh.length() <= 0) return;
                 try {
-                    String insert = String.format("INSERT INTO Sinhvien VALUES (null , '%s' , '%s' ,%s)" , ten , diachi , namsinh);
+                    String insert = String.format("INSERT INTO Sinhvien VALUES (null , '%s' , '%s' ,%s)", ten, diachi, namsinh);
 //                String insert = "INSERT INTO Sinhvien VALUES (null , ? , ? ,?)";
                     sqLite.onQuery(insert);
                     payLoad();
                     btnReset.performClick();
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
 
             }
         });
-
-
     }
-    private void payLoad(){
+
+    private void payLoad() {
         String data = "SELECT * FROM Sinhvien";
         Cursor cursor = sqLite.getData(data);
-        if (msinhviens != null){
+        if (msinhviens != null) {
             msinhviens.clear();
         }
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
             String ten = cursor.getString(1);
             String diachi = cursor.getString(2);
             int namsinh = cursor.getInt(3);
-            msinhviens.add(new Sinhvien(id,ten,diachi,namsinh));
-            msinhvienAdapter.notifyDataSetChanged();
+            msinhviens.add(new Sinhvien(id, ten, diachi, namsinh));
+            msinhvienAdapter.addAll(msinhviens);
         }
     }
 

@@ -21,15 +21,22 @@ public class SinhvienAdapter extends RecyclerView.Adapter<SinhvienAdapter.Holder
     private ArrayList<Sinhvien> sinhviens;
 
     public SinhvienAdapter(ArrayList<Sinhvien> sinhviens) {
-        this.sinhviens = sinhviens;
+        this.sinhviens = new ArrayList<>(sinhviens);
     }
-
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.item_sinhvien,null);
         return new Holder(view);
+    }
+    public void addAll(List<Sinhvien> sinhviens){
+        if (sinhviens != null ){
+
+            this.sinhviens.clear();
+            this.sinhviens.addAll(sinhviens);
+            notifyDataSetChanged();
+        }
     }
     public void filter(String text , ArrayList<Sinhvien> sinhvienArrayList){
         ArrayList<Sinhvien> arrayResult = new ArrayList<>();
@@ -39,11 +46,7 @@ public class SinhvienAdapter extends RecyclerView.Adapter<SinhvienAdapter.Holder
                     arrayResult.add(sinhvien);
                 }
             }
-            if (sinhviens != null){
-                sinhviens.clear();
-                sinhviens.addAll(arrayResult);
-                notifyDataSetChanged();
-            }
+            this.addAll(arrayResult);
 
         }
 
